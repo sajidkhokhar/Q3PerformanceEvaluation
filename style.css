@@ -1079,6 +1079,7 @@ img, svg { display: block; max-width: 100%; }
   gap: 24px;
   max-height: 0;
   opacity: 0;
+  padding-left: 50px;
   transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
 }
 .cao-card.open .cao-body {
@@ -1102,6 +1103,7 @@ img, svg { display: block; max-width: 100%; }
   flex-direction: column;
   gap: 20px;
   padding-bottom: 0;
+  padding-left: 50px;
 }
 .cao-card.open .cao-body-rich { padding-bottom: 28px; }
 .cao-list {
@@ -1132,6 +1134,9 @@ img, svg { display: block; max-width: 100%; }
   margin-top: 20px;
 }
 .cao-cons, .cao-pros {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-radius: 12px;
   padding: 16px 18px;
 }
@@ -1216,7 +1221,8 @@ img, svg { display: block; max-width: 100%; }
   .two-col { grid-template-columns: 1fr; }
   .columns-grid { grid-template-columns: 1fr; }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
-  .cao-body { grid-template-columns: 1fr; }
+  .cao-body { grid-template-columns: 1fr; padding-left: 0; }
+  .cao-body-rich { padding-left: 0; }
   .cao-card.open .cao-body { max-height: 320px; }
   .cao-card.open .cao-body-rich { max-height: 1200px; }
 }
