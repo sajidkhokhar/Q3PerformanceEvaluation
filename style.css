@@ -1046,7 +1046,55 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: 0.05em;
   color: var(--secondary);
 }
+.cao-label-cons { color: #e05c5c; }
+.cao-label-pros { color: #3dba7b; }
 .cao-body p { font-size: 14.5px; margin-top: 6px; color: var(--dark); }
+
+/* Rich cao body (API cost card) */
+.cao-body-rich { padding-bottom: 0; }
+.cao-card.open .cao-body-rich { max-height: 800px; padding-bottom: 24px; }
+.cao-list {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cao-list li {
+  font-size: 13.5px;
+  color: var(--dark);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.55;
+}
+.cao-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--secondary);
+}
+.cao-outcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.cao-cons, .cao-pros {
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.cao-cons {
+  background: rgba(224, 92, 92, 0.07);
+  border: 1px solid rgba(224, 92, 92, 0.2);
+}
+.cao-pros {
+  background: rgba(61, 186, 123, 0.07);
+  border: 1px solid rgba(61, 186, 123, 0.2);
+}
+.cao-cons .cao-list li::before { color: #e05c5c; }
+.cao-pros .cao-list li::before { color: #3dba7b; }
+@media (max-width: 600px) { .cao-outcome-grid { grid-template-columns: 1fr; } }
 
 /* ===================== COLUMNS (Q4 Focus) ===================== */
 .columns-grid {
