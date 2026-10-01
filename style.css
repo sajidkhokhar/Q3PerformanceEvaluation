@@ -1130,13 +1130,11 @@ img, svg { display: block; max-width: 100%; }
 .cao-outcome-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: start;
   gap: 16px;
   margin-top: 20px;
 }
 .cao-cons, .cao-pros {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   border-radius: 12px;
   padding: 16px 18px;
 }
