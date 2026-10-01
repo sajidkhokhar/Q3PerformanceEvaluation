@@ -383,6 +383,19 @@ img, svg { display: block; max-width: 100%; }
   padding: 10px;
   margin-bottom: 18px;
 }
+.contrib-icon-img {
+  background: none;
+  padding: 0;
+  overflow: hidden;
+}
+.app-icon-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
 .contrib-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
 .contrib-card p { font-size: 14.5px; color: var(--muted); margin-bottom: 14px; }
 .contrib-tag {
