@@ -102,14 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Expandable challenge (CAO) cards — hover to expand ---------- */
+  /* ---------- Expandable challenge (CAO) cards — tap/click to expand ---------- */
   const caoCards = document.querySelectorAll('.cao-card');
   caoCards.forEach(card => {
     const body = card.querySelector('.cao-body');
 
     const open = () => {
       card.classList.add('open');
-      // Set exact height so content is never clipped
       body.style.maxHeight = body.scrollHeight + 'px';
     };
 
@@ -118,14 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
       body.style.maxHeight = '0';
     };
 
-    card.addEventListener('mouseenter', open);
-    card.addEventListener('mouseleave', close);
+    const toggle = () => card.classList.contains('open') ? close() : open();
 
-    // Keep keyboard support
+    card.addEventListener('click', toggle);
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        card.classList.contains('open') ? close() : open();
+        toggle();
       }
     });
   });
