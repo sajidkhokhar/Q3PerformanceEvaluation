@@ -1051,8 +1051,13 @@ img, svg { display: block; max-width: 100%; }
 .cao-body p { font-size: 14.5px; margin-top: 6px; color: var(--dark); }
 
 /* Rich cao body (API cost card) */
-.cao-body-rich { padding-bottom: 0; }
-.cao-card.open .cao-body-rich { max-height: 800px; padding-bottom: 24px; }
+.cao-body-rich {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 0;
+}
+.cao-card.open .cao-body-rich { max-height: 1000px; padding-bottom: 28px; }
 .cao-list {
   list-style: none;
   margin: 8px 0 0 0;
@@ -1167,6 +1172,7 @@ img, svg { display: block; max-width: 100%; }
   .impact-grid { grid-template-columns: repeat(2, 1fr); }
   .cao-body { grid-template-columns: 1fr; }
   .cao-card.open .cao-body { max-height: 320px; }
+  .cao-card.open .cao-body-rich { max-height: 1200px; }
 }
 
 @media (max-width: 860px) {
