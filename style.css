@@ -782,6 +782,36 @@ img, svg { display: block; max-width: 100%; }
   margin-bottom: 14px;
 }
 .bridge-tag-secondary { color: var(--secondary); background: var(--secondary-tint); }
+
+/* Platform icons in cross-platform section */
+.platform-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.platform-icon-row .bridge-tag { margin-bottom: 0; }
+.platform-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  padding: 5px;
+  flex-shrink: 0;
+}
+.platform-icon-ios {
+  background: #1c1c1e;
+  color: #fff;
+}
+.platform-icon-android {
+  background: #3ddc84;
+  color: #fff;
+}
+.bridge-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
 .bridge-panel h3 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
 .panel-list li {
   font-size: 14.5px;
