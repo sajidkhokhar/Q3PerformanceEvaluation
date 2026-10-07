@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q4 2026 Product Roadmap — Sajid Khokhar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/*
+  Layout concept: a top "mission control" strip (quarter banner + KPI scoreboard + timeline grid),
+  followed by five deep-dive app cards (meta sidebar + strategy content), closed by an operating
+  rhythm section and the ownership table from the source roster. Serif display for section/app
+  titles gives the plan a "briefing document" feel; mono is reserved for metrics and dates.
+*/
+:root{
+  --bg:#f3f4f7;
+  --surface:#ffffff;
+  --surface-2:#eceef3;
+  --ink:#161b2c;
+  --ink-muted:#5b6479;
+  --ink-faint:#8891a3;
+  --line:#dfe2ea;
+  --accent:#2f5fd8;
+  --accent-ink:#1c3e9c;
+  --accent-bg:#e7edfc;
+  --guided:#2f7d56;
+  --guided-bg:#e2f1e7;
+  --autonomous:#9a6a12;
+  --autonomous-bg:#f7ecd4;
+  --good:#2f7d56;
+  --good-bg:#e2f1e7;
+  --warn:#9a6a12;
+  --warn-bg:#f7ecd4;
+  --crit:#b3413a;
+  --crit-bg:#fae4e2;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:'IBM Plex Mono', 'SF Mono', monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f121c;
+    --surface:#171b29;
+    --surface-2:#1d2232;
+    --ink:#eef0f6;
+    --ink-muted:#a4acc2;
+    --ink-faint:#747d95;
+    --line:#2b3146;
+    --accent:#7fa0ff;
+    --accent-ink:#bfd0ff;
+    --accent-bg:#1c2847;
+    --guided:#7fc79b;
+    --guided-bg:#193226;
+    --autonomous:#dcae57;
+    --autonomous-bg:#352a13;
+    --good:#7fc79b;
+    --good-bg:#193226;
+    --warn:#dcae57;
+    --warn-bg:#352a13;
+    --crit:#e59893;
+    --crit-bg:#3a1e1c;
+    color-scheme: dark;
+  }
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.55;
+  padding-inline:20px;
+}
+.page{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+img{max-width:100%}
+
+/* ---------- Nav ---------- */
+.topnav{
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  padding:10px 20px;
+  display:flex;gap:14px;align-items:center;overflow-x:auto;white-space:nowrap;
+}
+.topnav a{color:var(--ink-muted);text-decoration:none;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:4px 2px;border-bottom:2px solid transparent}
+.topnav a:hover{color:var(--ink);border-color:var(--line)}
+.topnav .back{color:var(--accent);display:flex;align-items:center;gap:5px}
+.topnav .sep{width:1px;height:16px;background:var(--line);flex:none}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:32px 22px}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-bg);display:inline-block;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,4.5vw,40px);letter-spacing:-.01em}
+.hero p{color:var(--ink-muted);max-width:62ch;margin-top:10px;font-size:15.5px}
+
+/* ---------- KPI scoreboard ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-block:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px}
+.kpi .tag{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint)}
+.kpi .val{font-family:var(--font-display);font-size:26px;margin-top:6px;display:flex;align-items:baseline;gap:6px}
+.kpi .val small{font-family:var(--font-body);font-size:12.5px;font-weight:500;color:var(--ink-muted)}
+.kpi .bar{height:6px;border-radius:99px;background:var(--surface-2);margin-top:10px;overflow:hidden}
+.kpi .bar>i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+.kpi .sub{font-size:12px;color:var(--ink-muted);margin-top:8px}
+
+/* ---------- Tier badges ---------- */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.badge.guided{color:var(--guided);background:var(--guided-bg)}
+.badge.autonomous{color:var(--autonomous);background:var(--autonomous-bg)}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ---------- Section heading ---------- */
+.section{padding-block:30px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.section-head h2{font-size:22px}
+.section-head .count{font-family:var(--font-mono);font-size:12px;color:var(--ink-faint)}
+.section-intro{color:var(--ink-muted);max-width:70ch;margin-bottom:18px;font-size:14px}
+
+/* ---------- Timeline / gantt ---------- */
+.timeline{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tl-row{display:grid;grid-template-columns:150px repeat(3,1fr);border-top:1px solid var(--line)}
+.tl-row:first-child{border-top:none}
+.tl-head{background:var(--surface-2);font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.tl-head .tl-app{display:flex;align-items:center;padding:10px 14px}
+.tl-head .tl-month{padding:10px 10px;text-align:center}
+.tl-app{padding:14px;display:flex;flex-direction:column;gap:6px;justify-content:center;border-right:1px solid var(--line)}
+.tl-app b{font-size:13.5px}
+.tl-cell{padding:10px;border-right:1px solid var(--line);display:flex;align-items:center}
+.tl-cell:last-child{border-right:none}
+.phase{width:100%;border-radius:9px;padding:8px 10px;font-size:12px;line-height:1.35}
+.phase b{display:block;font-size:11px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:2px}
+.phase.audit{background:var(--accent-bg);color:var(--accent-ink)}
+.phase.build{background:var(--autonomous-bg);color:var(--autonomous)}
+.phase.test{background:var(--crit-bg);color:var(--crit)}
+.phase.scale{background:var(--good-bg);color:var(--good)}
+@media (max-width:720px){
+  .tl-row{grid-template-columns:1fr}
+  .tl-head{display:none}
+  .tl-app{border-right:none;border-bottom:1px solid var(--line)}
+  .tl-cell{border-right:none;border-bottom:1px solid var(--line)}
+  .tl-cell::before{content:attr(data-month);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;color:var(--ink-faint);width:36px;flex:none}
+}
+
+/* ---------- App cards ---------- */
+.app-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:22px;overflow:hidden}
+.app-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:20px 22px;border-bottom:1px solid var(--line)}
+.app-head-left{display:flex;align-items:center;gap:12px}
+.app-num{font-family:var(--font-mono);font-size:12px;color:var(--ink-faint);background:var(--surface-2);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.app-head h3{font-size:20px}
+.app-head .backup{font-size:12px;color:var(--ink-faint)}
+.app-body{display:grid;grid-template-columns:220px 1fr;gap:0}
+.app-meta{padding:20px 22px;border-right:1px solid var(--line);background:var(--surface-2)}
+.app-meta .m-label{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;margin-top:16px}
+.app-meta .m-label:first-child{margin-top:0}
+.app-meta .m-val{font-size:13.5px;font-weight:500}
+.app-content{padding:20px 22px;display:flex;flex-direction:column;gap:18px}
+@media (max-width:640px){
+  .app-body{grid-template-columns:1fr}
+  .app-meta{border-right:none;border-bottom:1px solid var(--line)}
+}
+
+.context-box{background:var(--surface-2);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13.5px;color:var(--ink-muted)}
+.context-box b{color:var(--ink)}
+
+.strategy-block h4{font-size:13px;letter-spacing:.02em;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.strategy-block h4::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.strategy-block ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.strategy-block li{font-size:13.5px;color:var(--ink-muted)}
+.strategy-block li b{color:var(--ink);font-weight:600}
+.strategy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.strategy-grid{grid-template-columns:1fr}}
+
+.abtest-table{width:100%;border-collapse:collapse;font-size:13px}
+.abtest-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--line)}
+.abtest-table td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--ink-muted);vertical-align:top}
+.abtest-table td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+.abtest-wrap{overflow-x:auto}
+
+.goal-row{display:flex;align-items:center;gap:10px}
+.goal-row .gbar{flex:1;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.goal-row .gbar>i{display:block;height:100%;border-radius:99px}
+.goal-row .gval{font-family:var(--font-mono);font-size:12.5px;color:var(--ink-muted);white-space:nowrap}
+
+/* ---------- App icon + live store snapshot ---------- */
+.app-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.15);flex:none}
+.store-snap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin-top:2px}
+.store-snap .snap-stat{display:flex;flex-direction:column}
+.store-snap .snap-stat b{font-family:var(--font-display);font-size:17px}
+.store-snap .snap-stat span{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint)}
+.store-snap .snap-live{font-family:var(--font-mono);font-size:10.5px;color:var(--good);display:flex;align-items:center;gap:5px;margin-left:auto}
+.store-snap .snap-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+
+/* ---------- Review quotes ---------- */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:640px){.review-grid{grid-template-columns:1fr}}
+.review-quote{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-size:13px}
+.review-quote .rq-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.review-quote .rq-title{font-weight:600;color:var(--ink)}
+.review-quote .rq-stars{font-family:var(--font-mono);font-size:11px;color:var(--crit);white-space:nowrap}
+.review-quote p{margin:0;color:var(--ink-muted);font-style:italic;line-height:1.5}
+.review-quote .rq-fix{margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);color:var(--ink);font-style:normal;font-size:12.5px}
+.review-quote .rq-fix b{color:var(--accent-ink)}
+.alert-box{background:var(--crit-bg);border-left:3px solid var(--crit);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13.5px;color:var(--crit)}
+.alert-box b{color:var(--crit)}
+
+/* ---------- Operating rhythm ---------- */
+.rhythm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.rhythm-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.rhythm-card .freq{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-bg);display:inline-block;padding:3px 9px;border-radius:99px;margin-bottom:10px}
+.rhythm-card ul{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.rhythm-card li{font-size:13px;color:var(--ink-muted)}
+
+/* ---------- Ownership table ---------- */
+.owner-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.owner-table th{background:var(--surface-2);text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);padding:10px 14px}
+.owner-table td{padding:11px 14px;border-top:1px solid var(--line);font-size:13.5px}
+.owner-table tr.section-row td{background:var(--surface-2);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+
+footer{padding-block:30px 50px;color:var(--ink-faint);font-size:12px;border-top:1px solid var(--line);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<nav class="topnav">
+  <a href="index.html" class="back">&larr; Q3 Review</a>
+  <span class="sep"></span>
+  <a href="#overview">Overview</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#snore">Snore Tracker</a>
+  <a href="#video">Video to Live</a>
+  <a href="#menu">Menu Smart</a>
+  <a href="#translate">Translate AI</a>
+  <a href="#transcribe">Transcribe</a>
+  <a href="#rhythm">Operating Rhythm</a>
+  <a href="#ownership">Ownership</a>
+</nav>
+
+<section class="hero" id="overview">
+  <span class="eyebrow">Q4 2026 · Oct – Dec</span>
+  <h1>Product &amp; ASO Roadmap</h1>
+  <p>Five apps, one quarter. Priority is fixing conversion and retention leaks before spending more on acquisition: every app gets an ASO refresh, but the heavier lift is user-journey repair, rating &amp; review recovery, and a shared premium A/B testing program across the two monetization-critical apps.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="tag">Snore Tracker · App Store today</div>
+      <div class="val">4.5<small>★ · 298 ratings (US)</small></div>
+      <div class="bar"><i style="width:90%;background:var(--good)"></i></div>
+      <div class="sub">Onboarding completion target: 90% — baseline to be set from Oct funnel audit</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Menu Smart · App Store rating</div>
+      <div class="val">4.7<small>★ floor to hold</small></div>
+      <div class="bar"><i style="width:94%;background:var(--good)"></i></div>
+      <div class="sub">Must not dip during Android build + iOS launch monitoring</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Premium A/B program</div>
+      <div class="val">2<small>apps in scope</small></div>
+      <div class="bar"><i style="width:40%;background:var(--accent)"></i></div>
+      <div class="sub">Snore Tracker + Video to Live — pricing, design &amp; functionality axes</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Video to Live · Last build shipped</div>
+      <div class="val">2022<small>v1.4, 4,245 ratings since</small></div>
+      <div class="bar"><i style="width:10%;background:var(--crit)"></i></div>
+      <div class="sub">No binary update in ~4 years despite steady review volume — biggest Q4 risk</div>
+    </div>
+    <div class="kpi">
+      <div class="tag">Translate AI · App Store today</div>
+      <div class="val">4.4<small>★ · 328 ratings (US)</small></div>
+      <div class="bar"><i style="width:88%;background:var(--autonomous)"></i></div>
+      <div class="sub">Rating is decent on paper — top "most helpful" reviews are mostly 1★</div>
+    </div>
+  </div>
+  <p class="section-intro" style="margin-top:4px">Live snapshot pulled from the public App Store listings on Oct 7, 2026 (US storefront — see each app's section below for exact IDs and review sources). Menu Smart and Transcribe have no public store link shared yet, so their numbers above stay as internal targets.</p>
+</section>
+
+<section class="section" id="timeline">
+  <div class="section-head"><h2>Quarter at a glance</h2><span class="count">5 apps · 3 months</span></div>
+  <p class="section-intro">Every app runs the same three-step rhythm — <b style="color:var(--accent-ink)">audit</b>, <b style="color:var(--autonomous)">build &amp; fix</b>, <b style="color:var(--good)">test &amp; scale</b> — offset so review/rating work always follows a bug-fix pass, never precedes it.</p>
+  <div class="timeline">
+    <div class="tl-row tl-head">
+      <div class="tl-app">App</div>
+      <div class="tl-month">October</div>
+      <div class="tl-month">November</div>
+      <div class="tl-month">December</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-app"><b>Snore Tracker</b><span class="badge autonomous">Autonomous</span></div>
+      <div class="tl-cell" data-month="Oct"><div class="phase audit"><b>Audit</b>Funnel mapping, drop-off analysis, ASO keyword refresh</div></div>
+      <div class="tl-cell" data-month="Nov"><div class="phase build"><b>Build &amp; fix</b>Onboarding + flow/UI fixes, rating-prompt redesign</div></div>
+      <div class="tl-cell" data-month="Dec"><div class="phase test"><b>Test</b>Premium A/B tests live, scale winning variant</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-app"><b>Video to Live</b><span class="badge guided">Guided</span></div>
+      <div class="tl-cell" data-month="Oct"><div class="phase audit"><b>Audit</b>Rating/review gap analysis, bug triage</div></div>
+      <div class="tl-cell" data-month="Nov"><div class="phase build"><b>Build &amp; fix</b>Flow + design fixes, new premium strategy built</div></div>
+      <div class="tl-cell" data-month="Dec"><div class="phase test"><b>Test</b>Premium A/B tests, purchase-count readout</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-app"><b>Menu Smart</b><span class="badge guided">Guided</span></div>
+      <div class="tl-cell" data-month="Oct"><div class="phase build"><b>Build</b>Android parity dev starts; daily iOS analytics watch</div></div>
+      <div class="tl-cell" data-month="Nov"><div class="phase build"><b>Build</b>Android closed beta; fix iOS gaps found from analytics</div></div>
+      <div class="tl-cell" data-month="Dec"><div class="phase scale"><b>Scale</b>Android soft launch; rating/review push to hold 4.7★</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-app"><b>Translate AI</b><span class="badge guided">Guided</span></div>
+      <div class="tl-cell" data-month="Oct"><div class="phase audit"><b>Audit</b>Bug triage + old vs. new version review audit</div></div>
+      <div class="tl-cell" data-month="Nov"><div class="phase build"><b>Build &amp; fix</b>Ship fixes; launch rating/review recovery strategy</div></div>
+      <div class="tl-cell" data-month="Dec"><div class="phase scale"><b>Scale</b>Track rating trend weekly; iterate messaging/prompts</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-app"><b>Transcribe</b><span class="badge guided">Guided</span><span class="backup">secondary · backs up Ashfak</span></div>
+      <div class="tl-cell" data-month="Oct"><div class="phase build"><b>Fix</b>Triage &amp; fix live app bugs</div></div>
+      <div class="tl-cell" data-month="Nov"><div class="phase audit"><b>QA</b>Full app-flow pass, log remaining gaps</div></div>
+      <div class="tl-cell" data-month="Dec"><div class="phase scale"><b>Stabilize</b>Monitor crash/ANR trend, handoff notes to Ashfak</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SNORE TRACKER -->
+<section class="section" id="snore">
+  <div class="app-card">
+    <div class="app-head">
+      <div class="app-head-left">
+        <img class="app-icon" src="images/snoretracker-icon.jpg" alt="SnoreIQ app icon">
+        <div class="app-num">01</div>
+        <div><h3>Snore Tracker</h3></div>
+        <span class="badge autonomous">Autonomous</span>
+      </div>
+      <span class="backup">Backup: Sahil</span>
+    </div>
+    <div style="padding:0 22px 18px">
+      <div class="store-snap">
+        <div class="snap-stat"><b>4.5★</b><span>App Store rating</span></div>
+        <div class="snap-stat"><b>298</b><span>Ratings (US)</span></div>
+        <div class="snap-stat"><b>v2.9.3</b><span>Current build</span></div>
+        <span class="snap-live">Live from App Store · Oct 7, 2026</span>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="app-meta">
+        <div class="m-label">Q4 focus</div>
+        <div class="m-val">ASO growth + onboarding repair + premium A/B</div>
+        <div class="m-label">Primary KPI</div>
+        <div class="m-val">Onboarding completion ≥ 90%</div>
+        <div class="m-label">Secondary KPI</div>
+        <div class="m-val">Daily downloads, premium conversion</div>
+        <div class="m-label">Risk if deprioritized</div>
+        <div class="m-val">Highest-leverage app this quarter — autonomous tier, no gate before shipping</div>
+      </div>
+      <div class="app-content">
+        <div class="context-box"><b>Why now:</b> downloads need an ASO push, but the bigger lever is the journey itself — find where users actually drop off and fix that before spending more on acquisition.</div>
+
+        <div>
+          <div class="goal-row" style="margin-bottom:6px">
+            <span style="font-size:12.5px;color:var(--ink-muted);width:150px">Onboarding completion</span>
+            <div class="gbar"><i style="width:62%;background:var(--autonomous)"></i></div>
+            <span class="gval">baseline → 90%</span>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <h4>What real reviews say right now — fix list</h4>
+          <div class="review-grid">
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"Download SNORE LAB instead"</span><span class="rq-stars">★★☆☆☆</span></div>
+              <p>"Not accurate. My snoring wakes my wife up at night... my wife would make note of the times and it didn't match." — the #2 most-helpful review on the listing, naming a competitor directly.</p>
+              <div class="rq-fix"><b>Fix:</b> audit detection accuracy against a known-snoring test set before any ASO push — a named-competitor comparison this visible undercuts every install it earns.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"Not worthwhile"</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"App failed to record 50% of nights. Otherwise fine, good even, but that's a high failure rate. Also, a subscription for an app that entirely lives in..."</p>
+              <div class="rq-fix"><b>Fix:</b> background-recording reliability (iOS backgrounding/mic session interruptions) is likely the actual onboarding-drop-off culprit, not just the permission screen.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"Major disappointment"</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"The data feels very inaccurate, it does not integrate with Apple Health, and the app feels outdated with no meaningful AI or useful sleep insight."</p>
+              <div class="rq-fix"><b>Fix:</b> Apple Health integration is a free, high-signal differentiator — add it as a listing talking point once shipped, not just a changelog line.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Recordings paywalled</span><span class="rq-stars">★★★★★</span></div>
+              <p>"Super helpful to know if I'm snoring since I sleep by myself. I would like to be able to listen to the recordings without paying.."</p>
+              <div class="rq-fix"><b>Fix:</b> a happy user blocked by the paywall is exactly who the premium A/B tests below should target — test unlocking playback vs. keeping it gated.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="strategy-grid">
+          <div class="strategy-block">
+            <h4>ASO — keyword &amp; listing</h4>
+            <ul>
+              <li>Re-run keyword research around <b>snore, snoring sounds, sleep tracker, sleep apnea detector</b>; lead title/subtitle with the highest-intent term</li>
+              <li>Refresh screenshots to show the sound-analysis dashboard and the premium insights screen, not just the record button</li>
+              <li>Add/update preview video; A/B the icon if rank plateaus after metadata refresh</li>
+              <li>Watch for the Jan "New Year health" search spike — have metadata locked by mid-Dec</li>
+            </ul>
+          </div>
+          <div class="strategy-block">
+            <h4>Onboarding &amp; drop-off repair</h4>
+            <ul>
+              <li>Instrument funnel step-by-step (permissions → account → first sleep session setup) if not already split out in analytics</li>
+              <li>Identify the single biggest drop-off step first — fix that before touching the rest of the flow</li>
+              <li>Re-test permission-request timing/copy (mic/notifications) — usually the top drop point in sleep apps</li>
+              <li>Re-measure weekly against the 90% target, not just at quarter-end</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Rating &amp; review strategy</h4>
+          <ul>
+            <li>Move the rating prompt to a <b>positive moment</b> (e.g. a good-sleep-night result or a completed week of tracking), not right after onboarding</li>
+            <li>Gate it: ask "Enjoying Snore Tracker?" first — happy users go to the store prompt, unhappy users go to an in-app feedback form instead</li>
+            <li>Reply to recent store reviews that flag bugs or confusion, especially around premium</li>
+          </ul>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Premium A/B testing — pricing, design &amp; functionality</h4>
+          <div class="abtest-wrap">
+          <table class="abtest-table">
+            <tr><th>Axis</th><th>Variants to test</th><th>Success metric</th></tr>
+            <tr><td>Pricing</td><td>Monthly vs. annual-first default; trial length (3-day vs. 7-day)</td><td>Trial starts → paid conversion</td></tr>
+            <tr><td>Design</td><td>Social-proof-led paywall vs. feature-comparison table layout</td><td>Paywall view → trial start</td></tr>
+            <tr><td>Functionality</td><td>Which premium feature is shown first/unlocked for preview</td><td>Engagement with premium screens</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO TO LIVE -->
+<section class="section" id="video">
+  <div class="app-card">
+    <div class="app-head">
+      <div class="app-head-left">
+        <img class="app-icon" src="images/videotolive-icon.png" alt="Video to Live app icon">
+        <div class="app-num">02</div>
+        <div><h3>Video to Live</h3></div>
+        <span class="badge guided">Guided</span>
+      </div>
+      <span class="backup">Backup: Krutik</span>
+    </div>
+    <div style="padding:0 22px 18px">
+      <div class="store-snap">
+        <div class="snap-stat"><b>4.5★</b><span>App Store rating</span></div>
+        <div class="snap-stat"><b>4,245</b><span>Ratings (US)</span></div>
+        <div class="snap-stat"><b>v1.4</b><span>Build — shipped Dec 2022</span></div>
+        <span class="snap-live">Live from App Store · Oct 7, 2026</span>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="app-meta">
+        <div class="m-label">Q4 focus</div>
+        <div class="m-val">Close the rating/review gap + premium A/B</div>
+        <div class="m-label">Primary KPI</div>
+        <div class="m-val">Average rating &amp; review volume</div>
+        <div class="m-label">Secondary KPI</div>
+        <div class="m-val">Premium purchase count</div>
+        <div class="m-label">Status</div>
+        <div class="m-val">Rating looks healthy at 4.5★, but the binary hasn't shipped since 2022</div>
+      </div>
+      <div class="app-content">
+        <div class="alert-box"><b>Real finding:</b> the live build is version 1.4, released 11 Dec 2022 — the app has collected 4,245 ratings since on a nearly 4-year-old binary. Every bug below has been live the entire time.</div>
+        <div class="context-box"><b>Why now:</b> acquisition is healthy — the gap is trust signals. Daily users are up but ratings/reviews lag, which caps future organic growth even if installs keep climbing.</div>
+
+        <div class="strategy-block">
+          <h4>What real reviews say right now — fix list</h4>
+          <div class="review-grid">
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"Bad editor" / "Needs work" / "Yup"</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"Turns videos to Live Photos but it turns the video to the side and squishes it making it look bad" — this orientation bug is reported independently across at least 3 separate reviews.</p>
+              <div class="rq-fix"><b>Fix:</b> top priority bug for Q4 — portrait/landscape handling in the video→Live Photo conversion pipeline. Recurring, specific, and easy to reproduce from the reports alone.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Unwanted auto color filter</span><span class="rq-stars">★★☆☆☆</span></div>
+              <p>"The app automatically distorts the colors of the Live Photo and you can't change it back to iPhone's original color format."</p>
+              <div class="rq-fix"><b>Fix:</b> add a "no filter / original" toggle as the processing default, not an opt-in buried in settings.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Subscription prompt fatigue</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"The popups are so annoying please get rid of them I can't stand it" / "keeps popping up asking me to buy subscription."</p>
+              <div class="rq-fix"><b>Fix:</b> paywall frequency/timing is exactly what the premium A/B design axis below should resolve — cap prompt frequency per session as a quick win first.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Reviews written "to get premium"</span><span class="rq-stars">★★★★★</span></div>
+              <p>Multiple top reviews read like: "I'm only writing this to get premium" / "writing a 100 word review for premium so why not" — a recurring pattern among the most-visible 5★ reviews.</p>
+              <div class="rq-fix"><b>Fix — compliance risk:</b> if reviews are currently incentivized by a premium unlock, that violates App Store guideline 4.1 (incentivized reviews) and risks removal. Confirm whether this exists in the current flow and remove it before the rating/review strategy below goes live.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="strategy-grid">
+          <div class="strategy-block">
+            <h4>ASO — protect, don't disrupt</h4>
+            <ul>
+              <li>No title/keyword changes while rankings are healthy — track weekly instead of iterating blind</li>
+              <li>Refresh screenshots/preview video seasonally with real before/after transformations and UGC, since the creative is what can move rating perception pre-download</li>
+            </ul>
+          </div>
+          <div class="strategy-block">
+            <h4>Flow, design &amp; bug fixes</h4>
+            <ul>
+              <li>Full bug sweep across the export/share flow — this is usually where a "great idea, rough execution" review comes from</li>
+              <li>Pass over overall UI/UX for friction points between "upload video" and "see live photo result"</li>
+              <li>Re-check performance on older/low-end devices — a common silent source of 2–3★ reviews in media-processing apps</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Rating &amp; review strategy</h4>
+          <ul>
+            <li>Trigger the rating prompt right after a successful export/share — the app's clearest "delight" moment</li>
+            <li>Use a pre-prompt gate ("Enjoying your live photo?") to route unhappy users to private feedback instead of the store</li>
+            <li>Respond publicly to existing reviews that cite bugs once fixes ship — shows active development to new visitors reading reviews</li>
+          </ul>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Premium A/B testing — same framework as Snore Tracker</h4>
+          <div class="abtest-wrap">
+          <table class="abtest-table">
+            <tr><th>Axis</th><th>Variants to test</th><th>Success metric</th></tr>
+            <tr><td>Pricing</td><td>Trial length, annual vs. lifetime emphasis</td><td>Purchase count</td></tr>
+            <tr><td>Design</td><td>Paywall layout, placement in the export flow (pre vs. post result)</td><td>Paywall view → purchase</td></tr>
+            <tr><td>Functionality</td><td>Which premium effect/export quality is the hook feature</td><td>Premium feature engagement</td></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SMART -->
+<section class="section" id="menu">
+  <div class="app-card">
+    <div class="app-head">
+      <div class="app-head-left">
+        <img class="app-icon" src="images/menusmart-icon.png" alt="Menu Smart app icon">
+        <div class="app-num">03</div>
+        <div><h3>Menu Smart</h3></div>
+        <span class="badge guided">Guided</span>
+      </div>
+      <span class="backup">Backup: Sourabh</span>
+    </div>
+    <div class="app-body">
+      <div class="app-meta">
+        <div class="m-label">Q4 focus</div>
+        <div class="m-val">Android parity + iOS launch monitoring</div>
+        <div class="m-label">Primary KPI</div>
+        <div class="m-val">Hold App Store rating ≥ 4.7★</div>
+        <div class="m-label">Secondary KPI</div>
+        <div class="m-val">User traffic, Android build progress</div>
+        <div class="m-label">Risk</div>
+        <div class="m-val">New iOS launch is fragile — daily analytics review is non-negotiable this quarter</div>
+      </div>
+      <div class="app-content">
+        <div class="context-box"><b>Why now:</b> iOS just launched and is being judged in real time by new users; Android doesn't exist yet. Both compete for the same design/eng attention, so sequence matters — iOS stability first, Android build in parallel without slowing iOS fixes.</div>
+
+        <div class="strategy-grid">
+          <div class="strategy-block">
+            <h4>Android build — parity with iOS</h4>
+            <ul>
+              <li>Match iOS feature set and visual design 1:1 for launch — no scope creep, parity first, platform-specific polish later</li>
+              <li>Build Play Store listing in parallel: feature graphic, screenshots sized for Android devices, localized metadata matched to iOS keyword strategy</li>
+              <li>Closed beta in November, soft launch in December once core flows are stable</li>
+            </ul>
+          </div>
+          <div class="strategy-block">
+            <h4>iOS — daily analytics &amp; journey check</h4>
+            <ul>
+              <li>Daily check: installs, funnel completion, crash rate, new reviews — early weeks of a launch are when drop-off patterns are most visible and most fixable</li>
+              <li>Map the user journey from install → first meal plan/recipe generated; find and fix the biggest gap first</li>
+              <li>Feed every finding into the fix backlog the same week, not batched monthly</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Rating &amp; review strategy — hold 4.7★+</h4>
+          <ul>
+            <li>Trigger rating prompt after a clear success moment (meal plan created / recipe saved), gated behind a satisfaction check</li>
+            <li>Respond to every new iOS review during the launch window — both to catch bugs early and to signal active support to browsers</li>
+            <li>Once Android ships, apply the same prompt timing and response cadence there from day one rather than retrofitting later</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSLATE AI -->
+<section class="section" id="translate">
+  <div class="app-card">
+    <div class="app-head">
+      <div class="app-head-left">
+        <img class="app-icon" src="images/translateai-icon.png" alt="Translate AI app icon">
+        <div class="app-num">04</div>
+        <div><h3>Translate AI</h3></div>
+        <span class="badge guided">Guided</span>
+      </div>
+      <span class="backup">Backup: Ashfak</span>
+    </div>
+    <div style="padding:0 22px 18px">
+      <div class="store-snap">
+        <div class="snap-stat"><b>4.4★</b><span>App Store rating</span></div>
+        <div class="snap-stat"><b>328</b><span>Ratings (US)</span></div>
+        <div class="snap-stat"><b>v3.2.2</b><span>Current build</span></div>
+        <span class="snap-live">Live from App Store · Oct 7, 2026</span>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="app-meta">
+        <div class="m-label">Q4 focus</div>
+        <div class="m-val">Bug fixes + rating/review recovery</div>
+        <div class="m-label">Primary KPI</div>
+        <div class="m-val">New-version rating trend</div>
+        <div class="m-label">Secondary KPI</div>
+        <div class="m-val">Positive review share post-rebuild</div>
+        <div class="m-label">Risk</div>
+        <div class="m-val">Legacy negative reviews still visible on the store page, shaping first impressions</div>
+      </div>
+      <div class="app-content">
+        <div class="alert-box"><b>Real finding:</b> the India and US store listings use inconsistent titles — "Translate AI - Live Translator" vs. "Translate AI- Voice Translator" (missing space before the dash). A free, same-day fix.</div>
+        <div class="context-box"><b>Why now:</b> the app was rebuilt and the old issues are fixed, but the store page doesn't know that — old negative reviews are still the first thing visitors read, and the new version isn't yet earning enough positive reviews to outweigh them.</div>
+
+        <div class="strategy-block">
+          <h4>What real reviews say right now — fix list</h4>
+          <div class="review-grid">
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Can't copy translated text</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"Why would you not allow the user to copy the translated text from the app to a chat to be used to communicate with a person" — reported independently in at least two separate reviews.</p>
+              <div class="rq-fix"><b>Fix:</b> this is the single most repeated, most fixable complaint — add a copy button to the result screen. Blocks the app's core real-world use case (translate, then send).</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">Voice translation accuracy</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"Works poorly for voice; not ready for use... most of the time doesn't understand spoken two or three word sentences. Those it does understand, it gets wrong."</p>
+              <div class="rq-fix"><b>Fix:</b> speech-to-text accuracy, not the translation engine itself, is the likely root cause — test the STT provider/config before touching translation logic.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"What are they thinking....."</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"You type in some text and it translates it into Spanish with no options to translate it into any other language."</p>
+              <div class="rq-fix"><b>Fix:</b> this reads like a discoverability bug, not a missing feature — the language picker is likely too hidden. Surface it on the main screen.</div>
+            </div>
+            <div class="review-quote">
+              <div class="rq-head"><span class="rq-title">"Scammed me"</span><span class="rq-stars">★☆☆☆☆</span></div>
+              <p>"It seemed to work OK and got pretty much everything right, but I hit my daily limit for the trial, so I..." — felt deceived rather than informed about the limit.</p>
+              <div class="rq-fix"><b>Fix:</b> show remaining free translations before the limit hits, not after — a messaging fix, not a pricing one.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="strategy-grid">
+          <div class="strategy-block">
+            <h4>Bug fixes first</h4>
+            <ul>
+              <li>Pull the actual complaint themes from both the old negative reviews and any new ones — fix what's still real before touching messaging</li>
+              <li>Re-test the core translate/conversation flow end-to-end on the current build</li>
+            </ul>
+          </div>
+          <div class="strategy-block">
+            <h4>Listing — reset expectations</h4>
+            <ul>
+              <li>Update screenshots and description to reflect the rebuilt app and current feature set — mismatched expectations are a common cause of the exact negative reviews described here</li>
+              <li>Use the "What's New" field to explicitly call out the rebuild/fixes on every release this quarter</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="strategy-block">
+          <h4>Rating &amp; review recovery strategy</h4>
+          <ul>
+            <li>Add an in-app rating prompt after a successful translation/conversation session, gated so dissatisfied users go to feedback, not the store</li>
+            <li>Publicly respond to recent App Store reviews, acknowledging old issues and pointing to what's fixed — new visitors read replies, not just star counts</li>
+            <li>Track rating trend weekly (not monthly) after the first fix release ships, so the strategy can be adjusted mid-quarter instead of at the end</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSCRIBE -->
+<section class="section" id="transcribe">
+  <div class="app-card">
+    <div class="app-head">
+      <div class="app-head-left">
+        <div class="app-num">05</div>
+        <div><h3>Transcribe</h3></div>
+        <span class="badge guided">Guided</span>
+      </div>
+      <span class="backup">Secondary — primary PE: Ashfak</span>
+    </div>
+    <div class="app-body">
+      <div class="app-meta">
+        <div class="m-label">Q4 focus</div>
+        <div class="m-val">Live bug fixes + flow QA</div>
+        <div class="m-label">Role this quarter</div>
+        <div class="m-val">Backup support to Ashfak (primary)</div>
+        <div class="m-label">Scope</div>
+        <div class="m-val">Stability, not ASO or growth — intentionally lighter-weight this quarter</div>
+      </div>
+      <div class="app-content">
+        <div class="context-box"><b>Why now:</b> as secondary owner, the job this quarter is to keep the live app healthy and hand Ashfak a clean list of findings — not to run ASO or growth initiatives here.</div>
+        <div class="strategy-block">
+          <h4>Plan</h4>
+          <ul>
+            <li><b>October</b> — triage and fix the live app's known bugs</li>
+            <li><b>November</b> — full app-flow QA pass; log every remaining gap, however small</li>
+            <li><b>December</b> — monitor crash/ANR and stability trend; hand off a written summary to Ashfak for Q1 planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATING RHYTHM -->
+<section class="section" id="rhythm">
+  <div class="section-head"><h2>General operating rhythm</h2><span class="count">All 5 apps</span></div>
+  <p class="section-intro">The same cadence runs underneath every app plan above — this is what keeps gaps and drops from sitting unnoticed for a month.</p>
+  <div class="rhythm-grid">
+    <div class="rhythm-card">
+      <span class="freq">Daily</span>
+      <ul>
+        <li>Check installs, crashes, funnel and new reviews across all 5 apps</li>
+        <li>Extra depth on Menu Smart iOS while it's in its post-launch window</li>
+        <li>Log anomalies same-day rather than batching for the weekly review</li>
+      </ul>
+    </div>
+    <div class="rhythm-card">
+      <span class="freq">Weekly</span>
+      <ul>
+        <li>Keyword rank check for Snore Tracker and Video to Live</li>
+        <li>Review new A/B test readouts; kill or extend underperforming variants</li>
+        <li>Triage and respond to new store reviews across all apps</li>
+        <li>Update roadmap status against this plan</li>
+      </ul>
+    </div>
+    <div class="rhythm-card">
+      <span class="freq">Monthly</span>
+      <ul>
+        <li>Full funnel/cohort review per app</li>
+        <li>Decide which A/B variants roll out to 100%</li>
+        <li>Rating-trend report for Menu Smart, Translate AI, Video to Live</li>
+        <li>Re-prioritize next month's backlog from findings</li>
+      </ul>
+    </div>
+    <div class="rhythm-card">
+      <span class="freq">End of quarter</span>
+      <ul>
+        <li>Compile ASO performance + rating movement across all 5 apps</li>
+        <li>Summarize A/B test outcomes and what shipped permanently</li>
+        <li>Confirm Android (Menu Smart) launch status</li>
+        <li>Draft Q1 2027 priorities from what's still open</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OWNERSHIP -->
+<section class="section" id="ownership">
+  <div class="section-head"><h2>Ownership &amp; backups</h2><span class="count">4 primary · 1 backup</span></div>
+  <table class="owner-table">
+    <tr><th>Owns as primary</th><th>Tier</th><th>Backup</th></tr>
+    <tr><td>Menu Smart</td><td><span class="badge guided">Guided</span></td><td>Sourabh</td></tr>
+    <tr><td>Translate AI</td><td><span class="badge guided">Guided</span></td><td>Ashfak</td></tr>
+    <tr><td>Video to Live</td><td><span class="badge guided">Guided</span></td><td>Krutik</td></tr>
+    <tr><td>Snore Tracker</td><td><span class="badge autonomous">Autonomous</span></td><td>Sahil</td></tr>
+    <tr class="section-row"><td colspan="3">Backs up as secondary</td></tr>
+    <tr><td>Transcribe</td><td><span class="badge guided">Guided</span></td><td>Primary PE: Ashfak</td></tr>
+  </table>
+</section>
+
+<footer>
+  Q4 2026 roadmap (Oct–Dec) · Owner: Sajid · App Store ratings, review quotes and build-version data for Snore Tracker, Video to Live and Translate AI were pulled live from the public App Store on Oct 7, 2026. Onboarding-funnel baselines and Menu Smart's figures are internal targets, pending the October audits.
+</footer>
+
+</div>
+</body>
+</html>
